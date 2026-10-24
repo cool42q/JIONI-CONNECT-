@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>JIONI CONNECT · dating</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #fff9f5 0%, #ffece3 100%);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #2e1b14;
+      padding: 1rem 1.2rem 2rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .app-container {
+      max-width: 520px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* header / brand */
+    .brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      margin: 0.5rem 0 1.2rem;
+    }
+
+    .brand-icon {
+      background: #ff5e7c;
+      background: linear-gradient(135deg, #ff4d6d, #ff8a5c);
+      width: 42px;
+      height: 42px;
+      border-radius: 50% 50% 50% 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(-10deg);
+      box-shadow: 0 8px 18px -4px rgba(255, 77, 109, 0.4);
+    }
+
+    .brand-icon span {
+      font-size: 1.7rem;
+      transform: rotate(10deg);
+    }
+
+    .brand-text {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #d43f6b, #b12e4a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .tagline {
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #ad6b5a;
+      margin-top: -0.5rem;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.3px;
+    }
+
+    /* cards & glass */
+    .card {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 32px;
+      padding: 1.5rem 1.3rem;
+      box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.1), 0 4px 18px rgba(255, 190, 170, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      color: #45261f;
+    }
+
+    .section-title i {
+      font-size: 1.5rem;
+    }
+
+    /* profile preview */
+    .profile-preview {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .avatar-big {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: #ffd9cf;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 600;
+      color: #bd4b6b;
+      border: 3px solid white;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+      overflow: hidden;
+    }
+
+    .avatar-big img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .profile-info h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .profile-info p {
+      font-size: 0.85rem;
+      color: #b16b5a;
+      margin-top: 0.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* image upload row */
+    .image-upload-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin: 1rem 0 0.5rem;
+    }
+
+    .upload-slot {
+      width: 72px;
+      height: 72px;
+      border-radius: 20px;
+      background: #fff1ec;
+      border: 2px dashed #fbc2b0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: #c97662;
+      cursor: pointer;
+      transition: 0.2s ease;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .upload-slot.filled {
+      border: 2px solid #ff8a6c;
+      background: #ffe4db;
+      font-size: 0.8rem;
+    }
+
+    .upload-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .upload-slot .remove-img {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      background: rgba(0,0,0,0.55);
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    .upload-slot .img-count-badge {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      background: #ff4d6d;
+      color: white;
+      font-size: 0.6rem;
+      font-weight: 700;
+      padding: 2px 5px;
+      border-radius: 30px;
+      opacity: 0.9;
+    }
+
+    /* location & people */
+    .location-bar {
+      background: #ffe6dd;
+      border-radius: 40px;
+      padding: 0.9rem 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin: 1.2rem 0 0.8rem;
+      font-weight: 500;
+      color: #572e22;
+      font-size: 0.95rem;
+    }
+
+    .location-bar i {
+      font-size: 1.4rem;
+      color: #e05757;
+    }
+
+    .people-grid {
+      display: flex;
+      gap: 0.9rem;
+      overflow-x: auto;
+      padding: 0.3rem 0.2rem 0.8rem;
+      scrollbar-width: thin;
+      scrollbar-color: #ffb6a2 #ffe6dd;
+    }
+
+    .people-grid::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .people-grid::-webkit-scrollbar-thumb {
+      background: #ffb6a2;
+      border-radius: 20px;
+    }
+
+    .person-card {
+      flex: 0 0 auto;
+      width: 100px;
+      text-align: center;
+      background: white;
+      padding: 0.8rem 0.4rem 0.6rem;
+      border-radius: 28px;
+      box-shadow: 0 8px 16px -6px rgba(200, 120, 90, 0.12);
+      border: 1px solid #ffded2;
+      transition: transform 0.2s;
+    }
+
+    .person-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #fbd1c0;
+      margin: 0 auto 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #ac4b45;
+      border: 2px solid white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      overflow: hidden;
+    }
+
+    .person-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .person-name {
+      font-weight: 600;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .person-distance {
+      font-size: 0.65rem;
+      color: #b16b5a;
+      margin-top: 0.15rem;
+    }
+
+    /* subscription cards */
+    .plans {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1rem 0 0.5rem;
+    }
+
+    .plan {
+      background: white;
+      border-radius: 26px;
+      padding: 1rem 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid #ffddd2;
+      transition: all 0.2s;
+      box-shadow: 0 6px 12px -6px rgba(180, 100, 80, 0.08);
+      cursor: pointer;
+    }
+
+    .plan.selected {
+      border: 2px solid #ff6b6b;
+      background: #fff9f7;
+      box-shadow: 0 10px 22px -10px #ffaaa0;
+    }
+
+    .plan-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .plan-emoji {
+      font-size: 2rem;
+    }
+
+    .plan-info h4 {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .plan-info p {
+      font-size: 0.75rem;
+      color: #b16b5a;
+      margin-top: 0.2rem;
+    }
+
+    .plan-price {
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: #c92a4a;
+      background: #fff0ec;
+      padding: 0.3rem 0.8rem;
+      border-radius: 40px;
+      white-space: nowrap;
+    }
+
+    .plan-price small {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #a14a3a;
+    }
+
+    /* buttons */
+    .btn {
+      background: linear-gradient(135deg, #ff5e7c, #ff8a5c);
+      border: none;
+      border-radius: 60px;
+      padding: 1rem 1.8rem;
+      font-weight: 700;
+      font-size: 1rem;
+      color: white;
+      width: 100%;
+      letter-spacing: -0.2px;
+      box-shadow: 0 16px 26px -8px #ff7b6b;
+      transition: 0.15s;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-top: 0.6rem;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+      box-shadow: 0 8px 14px -6px #ff7b6b;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      transform: none;
+      box-shadow: none;
+      pointer-events: none;
+    }
+
+    .btn-outline {
+      background: white;
+      color: #d43f6b;
+      box-shadow: 0 6px 14px -6px rgba(212, 63, 107, 0.2);
+      border: 1.5px solid #ffc5b8;
+    }
+
+    .btn-sm {
+      padding: 0.7rem 1.2rem;
+      font-size: 0.85rem;
+      width: auto;
+    }
+
+    .sms-note {
+      font-size: 0.75rem;
+      text-align: center;
+      color: #a86558;
+      margin-top: 0.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+    }
+
+    .toast-message {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) scale(0.95);
+      background: #2e1b14ee;
+      color: white;
+      padding: 0.8rem 1.8rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      transition: 0.25s ease;
+      pointer-events: none;
+      z-index: 1000;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.3);
+      white-space: nowrap;
+      border: 1px solid #ffb09e;
+    }
+
+    .toast-message.show {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+    }
+
+    /* utilities */
+    .flex-between {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .text-muted {
+      color: #b1887b;
+      font-size: 0.8rem;
+    }
+
+    .mt-2 {
+      margin-top: 0.5rem;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* floating hearts decoration */
+    .bg-heart {
+      position: fixed;
+      font-size: 4rem;
+      opacity: 0.08;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bg-heart.h1 { top: 10%; left: 2%; transform: rotate(-15deg); }
+    .bg-heart.h2 { bottom: 12%; right: 1%; transform: rotate(10deg); }
+    .bg-heart.h3 { top: 40%; right: 4%; font-size: 6rem; opacity: 0.05; }
+
+    /* Instagram footer */
+    .instagram-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-top: 0.8rem;
+      margin-bottom: 1.5rem;
+      text-decoration: none;
+      color: #a86558;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: -0.01em;
+      transition: 0.2s;
+      padding: 0.7rem 1.5rem;
+      border-radius: 60px;
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 200, 185, 0.6);
+      box-shadow: 0 6px 16px -8px rgba(200, 120, 90, 0.15);
+    }
+
+    .instagram-footer:hover {
+      background: white;
+      color: #d43f6b;
+      border-color: #ffb09e;
+      box-shadow: 0 8px 22px -10px rgba(212, 63, 107, 0.25);
+    }
+
+    .instagram-footer:active {
+      transform: scale(0.97);
+    }
+
+    .insta-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af);
+      border-radius: 7px;
+      color: white;
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .insta-handle {
+      font-weight: 700;
+      background: linear-gradient(135deg, #dd2a7b, #8134af);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-heart h1">❤️</div>
+  <div class="bg-heart h2">💕</div>
+  <div class="bg-heart h3">💘</div>
+
+  <div class="app-container">
+    <!-- brand header -->
+    <div class="brand">
+      <div class="brand-icon"><span>💞</span></div>
+      <div class="brand-text">JIONI CONNECT</div>
+    </div>
+    <div class="tagline">find your person · closer than you think</div>
+
+    <!-- profile section -->
+    <div class="card">
+      <div class="section-title">
+        <span>📸</span> Your profile
+      </div>
+      <div class="profile-preview">
+        <div class="avatar-big" id="mainAvatar">
+          <span>👤</span>
+        </div>
+        <div class="profile-info">
+          <h3 id="displayName">Guest user</h3>
+          <p><span>📍</span> <span id="userLocationText">location not scanned</span></p>
+        </div>
+      </div>
+
+      <!-- image upload area (min 3) -->
+      <div class="flex-between">
+        <span class="text-muted"><span id="imageCounter">0</span>/3 minimum photos</span>
+        <span class="text-muted" style="font-size:0.7rem;">tap to add</span>
+      </div>
+      <div class="image-upload-row" id="imageSlotsContainer">
+        <!-- slots will be injected by js -->
+      </div>
+
+      <!-- name input -->
+      <div style="display: flex; gap: 0.5rem; margin-top: 0.8rem;">
+        <input type="text" id="nameInput" placeholder="Your name" style="flex:1; padding:0.7rem 1rem; border-radius:40px; border:1px solid #ffd4c4; background:white; font-family:inherit; outline:none; font-size:0.9rem;">
+        <button class="btn btn-sm" id="setNameBtn" style="width:auto; margin:0; padding:0.6rem 1.2rem;">Set</button>
+      </div>
+    </div>
+
+    <!-- location & nearby matches -->
+    <div class="card">
+      <div class="section-title">
+        <span>📍</span> Near you
+      </div>
+      <div class="location-bar" id="locationBar">
+        <i>🛰️</i>
+        <span id="locationStatus">tap to scan your location</span>
+        <button class="btn btn-sm btn-outline" id="scanLocationBtn" style="margin-left: auto; width: auto; padding:0.4rem 1rem; font-size:0.75rem;">Scan</button>
+      </div>
+      <div class="people-grid" id="peopleGrid">
+        <!-- nearby people injected -->
+      </div>
+      <div class="text-muted" style="font-size:0.75rem; text-align:center; margin-top:0.4rem;">
+        <span id="matchCount">0</span> people within 5 km
+      </div>
+    </div>
+
+    <!-- subscription plans -->
+    <div class="card">
+      <div class="section-title">
+        <span>💎</span> Boost your connect
+      </div>
+      <div class="plans" id="plansContainer">
+        <!-- plans injected -->
+      </div>
+      <button class="btn" id="subscribeBtn" style="margin-top:1.2rem;">
+        <span>📲</span> Subscribe & get SMS
+      </button>
+      <div class="sms-note">
+        <span>🔒</span> Push SMS confirmation · funds to 0716595115
+      </div>
+    </div>
+
+    <!-- Instagram footer -->
+    <a href="https://instagram.com/jioniconnect" target="_blank" rel="noopener noreferrer" class="instagram-footer">
+      <span class="insta-icon">📷</span>
+      <span>Follow us <span class="insta-handle">@jioniconnect</span></span>
+    </a>
+  </div>
+
+  <div id="toast" class="toast-message">message</div>
+
+  <script>
+    (function(){
+      // ---------- state ----------
+      let profile = {
+        name: 'Guest user',
+        images: [],          // array of data URLs (max 5)
+        location: null,      // { lat, lng }
+        locationLabel: ''
+      };
+
+      // predefined subscription plans (Kshs .50 to 200)
+      const plans = [
+        { id: 'spark', name: 'Spark', price: 0.50, emoji: '✨', desc: '1 super like + 10 min boost' },
+        { id: 'glow', name: 'Glow', price: 50, emoji: '🌟', desc: '5 super likes + 30 min boost + see who liked you' },
+        { id: 'flame', name: 'Flame', price: 120, emoji: '🔥', desc: 'Unlimited likes + 2h boost + priority match' },
+        { id: 'diamond', name: 'Diamond', price: 200, emoji: '💎', desc: 'Everything + VIP badge + 5x profile views' }
+      ];
+
+      // sample nearby people (lat/lng offsets to simulate closeness)
+      const samplePeople = [
+        { name: 'Amina', distance: 0.3, lat: -1.286, lng: 36.817, avatarEmoji: '👩🏾' },
+        { name: 'Brian', distance: 0.8, lat: -1.292, lng: 36.821, avatarEmoji: '👨🏿' },
+        { name: 'Cynthia', distance: 1.2, lat: -1.284, lng: 36.812, avatarEmoji: '👩🏽' },
+        { name: 'David', distance: 1.9, lat: -1.301, lng: 36.827, avatarEmoji: '🧑🏾' },
+        { name: 'Eve', distance: 2.4, lat: -1.280, lng: 36.808, avatarEmoji: '👩🏿' },
+        { name: 'Farouk', distance: 3.1, lat: -1.295, lng: 36.835, avatarEmoji: '👨🏽' },
+        { name: 'Grace', distance: 4.0, lat: -1.275, lng: 36.825, avatarEmoji: '👩🏼' },
+        { name: 'Hassan', distance: 4.8, lat: -1.310, lng: 36.815, avatarEmoji: '👨🏾' }
+      ];
+
+      let selectedPlanId = 'flame'; // default
+      let nearbyPeople = [];        // filtered by distance
+      const MAX_IMAGES = 5;
+      const MIN_IMAGES = 3;
+
+      // DOM elements
+      const imageSlotsContainer = document.getElementById('imageSlotsContainer');
+      const imageCounterSpan = document.getElementById('imageCounter');
+      const displayNameEl = document.getElementById('displayName');
+      const mainAvatar = document.getElementById('mainAvatar');
+      const userLocationText = document.getElementById('userLocationText');
+      const locationStatus = document.getElementById('locationStatus');
+      const peopleGrid = document.getElementById('peopleGrid');
+      const matchCountSpan = document.getElementById('matchCount');
+      const plansContainer = document.getElementById('plansContainer');
+      const subscribeBtn = document.getElementById('subscribeBtn');
+      const toastEl = document.getElementById('toast');
+      const scanLocationBtn = document.getElementById('scanLocationBtn');
+      const nameInput = document.getElementById('nameInput');
+      const setNameBtn = document.getElementById('setNameBtn');
+
+      // Helper: show toast
+      function showToast(msg, duration = 2800) {
+        toastEl.textContent = msg;
+        toastEl.classList.add('show');
+        clearTimeout(window.toastTimer);
+        window.toastTimer = setTimeout(() => toastEl.classList.remove('show'), duration);
+      }
+
+      // Update image counter and trigger UI
+      function updateImageCounter() {
+        imageCounterSpan.textContent = profile.images.length;
+        // render the slots
+        renderImageSlots();
+        // update main avatar if first image exists
+        if (profile.images.length > 0) {
+          mainAvatar.innerHTML = `<img src="${profile.images[0]}" alt="avatar">`;
+        } else {
+          mainAvatar.innerHTML = `<span>👤</span>`;
+        }
+      }
+
+      // render image slots (max 5, but min 3 for profile completeness)
+      function renderImageSlots() {
+        const totalSlots = MAX_IMAGES;
+        let html = '';
+        for (let i = 0; i < totalSlots; i++) {
+          if (i < profile.images.length) {
+            // filled slot
+            html += `
+              <div class="upload-slot filled" data-index="${i}">
+                <img src="${profile.images[i]}" alt="photo ${i+1}">
+                <div class="remove-img" data-index="${i}">✕</div>
+                <div class="img-count-badge">${i+1}</div>
+              </div>
+            `;
+          } else {
+            // empty slot
+            html += `
+              <div class="upload-slot" data-index="${i}">
+                + 
+              </div>
+            `;
+          }
+        }
+        imageSlotsContainer.innerHTML = html;
+
+        // attach listeners
+        document.querySelectorAll('.upload-slot').forEach(slot => {
+          if (slot.classList.contains('filled')) return;
+          slot.addEventListener('click', function(e) {
+            if (e.target.classList.contains('remove-img')) return;
+            if (profile.images.length >= MAX_IMAGES) {
+              showToast('Maximum 5 photos', 1500);
+              return;
+            }
+            triggerFileInput();
+          });
+        });
+
+        document.querySelectorAll('.remove-img').forEach(btn => {
+          btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const idx = parseInt(this.dataset.index, 10);
+            profile.images.splice(idx, 1);
+            updateImageCounter();
+          });
+        });
+      }
+
+      // hidden file input
+      function triggerFileInput() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.onchange = (e) => {
+          const file = e.target.files[0];
+          if (!file) return;
+          if (profile.images.length >= MAX_IMAGES) {
+            showToast('Maximum 5 photos reached', 1500);
+            return;
+          }
+          const reader = new FileReader();
+          reader.onload = (ev) => {
+            profile.images.push(ev.target.result);
+            updateImageCounter();
+            showToast('Photo added 📸');
+          };
+          reader.readAsDataURL(file);
+        };
+        input.click();
+      }
+
+      // set display name
+      function updateNameDisplay() {
+        displayNameEl.textContent = profile.name;
+        nameInput.value = profile.name === 'Guest user' ? '' : profile.name;
+      }
+
+      // location scanning (simulated but real geolocation permission)
+      function scanLocation() {
+        if (!navigator.geolocation) {
+          showToast('Geolocation not supported', 2000);
+          return;
+        }
+        locationStatus.textContent = 'scanning...';
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            const { latitude, longitude } = pos.coords;
+            profile.location = { lat: latitude, lng: longitude };
+            // use a nicer label
+            const label = `Lat ${latitude.toFixed(3)}, Lng ${longitude.toFixed(3)}`;
+            profile.locationLabel = label;
+            userLocationText.textContent = label;
+            locationStatus.textContent = '📍 location active';
+            showToast('Location scanned! Showing people near you.', 2000);
+            // update nearby
+            updateNearbyPeople();
+          },
+          (err) => {
+            console.warn(err);
+            // fallback: nairobi coords
+            const fallbackLat = -1.286;
+            const fallbackLng = 36.817;
+            profile.location = { lat: fallbackLat, lng: fallbackLng };
+            userLocationText.textContent = 'Nairobi (approx)';
+            locationStatus.textContent = '📍 using approximate location';
+            showToast('Using approximate location (Nairobi)', 1800);
+            updateNearbyPeople();
+          },
+          { enableHighAccuracy: true, timeout: 8000 }
+        );
+      }
+
+      // filter / compute nearby people based on location
+      function updateNearbyPeople() {
+        if (!profile.location) {
+          // if no location, show all (with distance)
+          nearbyPeople = samplePeople.map(p => ({ ...p }));
+        } else {
+          // simulate: use given lat/lng offset, compute rough distance
+          const userLat = profile.location.lat;
+          const userLng = profile.location.lng;
+          nearbyPeople = samplePeople.map(p => {
+            // rough distance in km using simple delta (for simulation)
+            const dLat = (p.lat - userLat) * 111;
+            const dLng = (p.lng - userLng) * 111 * Math.cos(userLat * Math.PI/180);
+            const dist = Math.sqrt(dLat*dLat + dLng*dLng);
+            return { ...p, distance: parseFloat(dist.toFixed(1)) };
+          }).filter(p => p.distance <= 5.5); // within ~5 km
+        }
+        // sort by distance
+        nearbyPeople.sort((a,b) => a.distance - b.distance);
+        renderPeople();
+        matchCountSpan.textContent = nearbyPeople.length;
+      }
+
+      function renderPeople() {
+        if (nearbyPeople.length === 0) {
+          peopleGrid.innerHTML = `<div class="text-muted" style="padding:1rem;">No one nearby... try scanning again</div>`;
+          return;
+        }
+        let html = '';
+        nearbyPeople.slice(0, 8).forEach(p => {
+          html += `
+            <div class="person-card">
+              <div class="person-avatar">${p.avatarEmoji}</div>
+              <div class="person-name">${p.name}</div>
+              <div class="person-distance">${p.distance} km</div>
+            </div>
+          `;
+        });
+        peopleGrid.innerHTML = html;
+      }
+
+      // render subscription plans
+      function renderPlans() {
+        let html = '';
+        plans.forEach(plan => {
+          const selectedClass = (plan.id === selectedPlanId) ? 'selected' : '';
+          html += `
+            <div class="plan ${selectedClass}" data-plan-id="${plan.id}">
+              <div class="plan-left">
+                <div class="plan-emoji">${plan.emoji}</div>
+                <div class="plan-info">
+                  <h4>${plan.name}</h4>
+                  <p>${plan.desc}</p>
+                </div>
+              </div>
+              <div class="plan-price">Ksh ${plan.price.toFixed(2)}</div>
+            </div>
+          `;
+        });
+        plansContainer.innerHTML = html;
+
+        document.querySelectorAll('.plan').forEach(card => {
+          card.addEventListener('click', function() {
+            const planId = this.dataset.planId;
+            selectedPlanId = planId;
+            // re-render to update selected class
+            renderPlans();
+          });
+        });
+      }
+
+      // subscribe action
+      function handleSubscribe() {
+        // Validate: at least 3 images and name not guest
+        if (profile.images.length < MIN_IMAGES) {
+          showToast(`Please upload at least ${MIN_IMAGES} photos (you have ${profile.images.length})`, 2500);
+          return;
+        }
+        if (!profile.name || profile.name === 'Guest user') {
+          showToast('Please set your name first', 2000);
+          return;
+        }
+        if (!profile.location) {
+          showToast('Please scan your location before subscribing', 2200);
+          return;
+        }
+
+        const selectedPlan = plans.find(p => p.id === selectedPlanId);
+        if (!selectedPlan) return;
+
+        // "Push SMS" simulation
+        const phoneNumber = '0716595115'; // funds channel
+        const smsMessage = `JIONI CONNECT: You subscribed to ${selectedPlan.name} (Ksh ${selectedPlan.price.toFixed(2)}). Payment to ${phoneNumber}. Enjoy your boosts!`;
+        
+        // Show as an SMS toast (simulated push)
+        showToast(`📲 SMS sent to your phone: "${smsMessage}"`, 5000);
+
+        // Additional visual feedback
+        setTimeout(() => {
+          showToast(`✅ Subscription active: ${selectedPlan.name} (Ksh ${selectedPlan.price.toFixed(2)})`, 3000);
+        }, 1200);
+
+        // Update something on UI? (optional: add a tiny badge)
+        // For demo, just log.
+        console.log(`Funds Ksh ${selectedPlan.price} to ${phoneNumber}`);
+      }
+
+      // Initialize UI and event listeners
+      function init() {
+        // set name button
+        setNameBtn.addEventListener('click', () => {
+          const newName = nameInput.value.trim();
+          if (newName) {
+            profile.name = newName;
+            updateNameDisplay();
+            showToast(`Name set to ${newName}`);
+          } else {
+            showToast('Please enter a name');
+          }
+        });
+
+        // scan location
+        scanLocationBtn.addEventListener('click', scanLocation);
+
+        // subscribe button
+        subscribeBtn.addEventListener('click', handleSubscribe);
+
+        // initial renders
+        updateNameDisplay();
+        updateImageCounter();  // empty profile images
+        renderPlans();
+        // Set an empty people list with message until location scanned
+        peopleGrid.innerHTML = `<div class="text-muted" style="padding:1rem;">Scan location to see matches</div>`;
+        locationStatus.textContent = 'tap to scan your location';
+
+        // update image counter to 0
+        imageCounterSpan.textContent = '0';
+        // small hack: ensure initial render of slots
+        renderImageSlots();
+        
+        // Preload 3 placeholder images for a beautiful demo
+        if (profile.images.length === 0) {
+          const svgPlaceholder = (color, text) => {
+            return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='${encodeURIComponent(color)}'/%3E%3Ctext x='50' y='55' font-size='14' text-anchor='middle' fill='white' font-family='Inter' dy='.3em'%3E${text}%3C/text%3E%3C/svg%3E`;
+          };
+          profile.images = [
+            svgPlaceholder('#ffb6c1', '🌻'),
+            svgPlaceholder('#b0d9f0', '🌊'),
+            svgPlaceholder('#d0f0c0', '🌿')
+          ];
+          updateImageCounter();
+        }
+      }
+
+      // run
+      init();
+    })();
+  </script>
+</body>
+</html>
